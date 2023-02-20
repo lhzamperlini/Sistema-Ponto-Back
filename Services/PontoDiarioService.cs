@@ -62,9 +62,16 @@ namespace Sistema_Ponto_Back.Services
 
         public async Task DeletePontoDiario(Guid Id)
         { 
-                var ponto = _context.PontosDiarios.Where(p => p.Id.Equals(Id)).First();
+            try
+            {
+                var ponto = await _context.PontosDiarios.Include(p => p.ModuloApontamento).FirstOrDefaultAsync(p => p.Id.Equals(Id));
                 _context.PontosDiarios.Remove(ponto);
                 await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Algo errado aconteceu, tente novamente.");
+            }
         }
     }
 }
