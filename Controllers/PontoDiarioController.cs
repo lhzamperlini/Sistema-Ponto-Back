@@ -34,6 +34,24 @@ namespace Sistema_Ponto_Back.Controllers
             {
                 return BadRequest(ex.Message);
             }            
-        } 
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetPontos()
+        {
+            var pontos = await _pontoDiarioService.GetPontos();
+            return Ok(pontos);
+        }
+        [HttpPut]
+        public async Task<IActionResult> UpdatePonto([FromBody]PontoDiarioDTO pontoDiario)
+        {
+            await _pontoDiarioService.UpdatePontoDiario(pontoDiario);
+            return Ok();
+        }
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> DeletePonto([FromRoute] Guid Id)
+        {
+            await _pontoDiarioService.DeletePontoDiario(Id);
+            return Ok();
+        }
     }
 }
