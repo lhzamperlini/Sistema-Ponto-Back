@@ -10,6 +10,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IPontoDiarioService, PontoDiarioService>();
+builder.Services.AddScoped<IModuloApontamentoService, ModuloApontamentoService>();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();

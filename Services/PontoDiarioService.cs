@@ -19,10 +19,11 @@ namespace Sistema_Ponto_Back.Services
             try
             {
                 var pontoDiarioDB = new PontoDiario();
+                var modulo = _context.ModulosApontamento.Where(m => m.Id.Equals(pontoDiario.ModuloApontamentoId)).First();
 
                 pontoDiarioDB.Id = Guid.NewGuid();
                 pontoDiarioDB.DataApontamento = pontoDiario.DataApontamento;
-                pontoDiarioDB.ModuloApontamento = pontoDiario.ModuloApontamento;
+                pontoDiarioDB.ModuloApontamento = modulo;
                 pontoDiarioDB.Minutos = pontoDiario.Minutos;
                 pontoDiarioDB.Horas = pontoDiario.Horas;
                 pontoDiarioDB.Descricao = pontoDiario.Descricao;
@@ -42,7 +43,7 @@ namespace Sistema_Ponto_Back.Services
             var pontos = await _context.PontosDiarios.Include(m => m.ModuloApontamento).ToListAsync();
             foreach(PontoDiario ponto in pontos)
             {
-               var pontoDTO = new PontoDiarioDTO(ponto.Id, ponto.ModuloApontamento, ponto.DataApontamento, ponto.Horas, ponto.Minutos, ponto.Descricao);
+               var pontoDTO = new PontoDiarioDTO(ponto.Id, ponto.ModuloApontamento.Id, ponto.DataApontamento, ponto.Horas, ponto.Minutos, ponto.Descricao);
                pontosDTO.Add(pontoDTO);
             }
             return pontosDTO;
@@ -50,8 +51,9 @@ namespace Sistema_Ponto_Back.Services
 
         public async Task UpdatePontoDiario(PontoDiarioDTO pontoDiario)
         {
-            var pontoDiarioUpdate = await _context.PontosDiarios.Include(m => m.ModuloApontamento).FirstOrDefaultAsync(p => p.Id.Equals(pontoDiario.Id));
-            pontoDiarioUpdate.ModuloApontamento = pontoDiario.ModuloApontamento;
+            var modulo = _context.ModulosApontamento.Where(m => m.Id.Equals(pontoDiario.ModuloApontamentoId)).First();
+            var pontoDiarioUpdate = _context.PontosDiarios.Include(m => m.ModuloApontamento).Where(p => p.Id.Equals(pontoDiario.Id)).First();
+            pontoDiarioUpdate.ModuloApontamento = modulo;
             pontoDiarioUpdate.Descricao = pontoDiario.Descricao;
             pontoDiarioUpdate.Minutos = pontoDiario.Minutos;
             pontoDiarioUpdate.Horas = pontoDiario.Horas;

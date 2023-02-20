@@ -2,5 +2,5 @@
 
 namespace Sistema_Ponto_Back.Dtos.PontoDiario
 {
-    public record PontoDiarioDTO(Guid Id, ModuloApontamento ModuloApontamento, DateTime DataApontamento, int Horas, int Minutos, string Descricao);
+    public record PontoDiarioDTO(Guid Id, Guid ModuloApontamentoId, DateTime DataApontamento, int Horas, int Minutos, string Descricao);
 }
