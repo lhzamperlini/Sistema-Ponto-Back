@@ -2,7 +2,7 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs/Sistema Ponto Back/FileContentIndex
+/.vs
 /obj/Debug/net6.0/ref/Sistema Ponto Back.dll
 /obj/Debug/net6.0/refint/Sistema Ponto Back.dll
 /obj/Debug/net6.0/Sistema Ponto Back.dll
@@ -10,4 +10,3 @@
 /obj/Debug/net6.0/Sistema Ponto Back.csproj.CoreCompileInputs.cache
 /bin/Debug/net6.0/Sistema Ponto Back.dll
 /bin/Debug/net6.0/Sistema Ponto Back.pdb
-/.vs/Sistema Ponto Back/v17/.suo

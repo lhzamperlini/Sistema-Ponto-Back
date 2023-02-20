@@ -20,7 +20,6 @@ namespace Sistema_Ponto_Back.Services
             {
                 var moduloApontamentoDb = new ModuloApontamento();
 
-                moduloApontamentoDb.Id = Guid.NewGuid();
                 moduloApontamentoDb.Nome = moduloApontamento.Nome;
 
                 await _context.ModulosApontamento.AddAsync(moduloApontamentoDb);

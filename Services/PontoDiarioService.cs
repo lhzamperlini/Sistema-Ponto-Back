@@ -21,7 +21,6 @@ namespace Sistema_Ponto_Back.Services
                 var pontoDiarioDB = new PontoDiario();
                 var modulo = _context.ModulosApontamento.Where(m => m.Id.Equals(pontoDiario.ModuloApontamentoId)).First();
 
-                pontoDiarioDB.Id = Guid.NewGuid();
                 pontoDiarioDB.DataApontamento = pontoDiario.DataApontamento;
                 pontoDiarioDB.ModuloApontamento = modulo;
                 pontoDiarioDB.Minutos = pontoDiario.Minutos;
@@ -51,22 +50,38 @@ namespace Sistema_Ponto_Back.Services
 
         public async Task UpdatePontoDiario(PontoDiarioDTO pontoDiario)
         {
-            var modulo = _context.ModulosApontamento.Where(m => m.Id.Equals(pontoDiario.ModuloApontamentoId)).First();
-            var pontoDiarioUpdate = _context.PontosDiarios.Include(m => m.ModuloApontamento).Where(p => p.Id.Equals(pontoDiario.Id)).First();
-            pontoDiarioUpdate.ModuloApontamento = modulo;
-            pontoDiarioUpdate.Descricao = pontoDiario.Descricao;
-            pontoDiarioUpdate.Minutos = pontoDiario.Minutos;
-            pontoDiarioUpdate.Horas = pontoDiario.Horas;
-            pontoDiarioUpdate.DataApontamento = pontoDiario.DataApontamento;
+            try
+            {
+                var modulo = _context.ModulosApontamento.Where(m => m.Id.Equals(pontoDiario.ModuloApontamentoId)).First();
+                var pontoDiarioUpdate = _context.PontosDiarios.Include(m => m.ModuloApontamento).Where(p => p.Id.Equals(pontoDiario.Id)).First();
+                pontoDiarioUpdate.ModuloApontamento = modulo;
+                pontoDiarioUpdate.Descricao = pontoDiario.Descricao;
+                pontoDiarioUpdate.Minutos = pontoDiario.Minutos;
+                pontoDiarioUpdate.Horas = pontoDiario.Horas;
+                pontoDiarioUpdate.DataApontamento = pontoDiario.DataApontamento;
 
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Algo de errado aconteceu");
+            }
+          
         }
 
         public async Task DeletePontoDiario(Guid Id)
-        { 
+        {
+            try
+            {
                 var ponto = _context.PontosDiarios.Where(p => p.Id.Equals(Id)).First();
                 _context.PontosDiarios.Remove(ponto);
                 await _context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("Algo de errado aconteceu");
+            }
+
         }
     }
 }
